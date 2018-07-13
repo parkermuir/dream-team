@@ -2,18 +2,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
-
 let app = express();
 
 app.use(express.static(__dirname + '/../dist'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// app.get('/', (req, res) => {
-//   res.status(200).send('Hello World!!');
-// });
-
-app.get('/team', (req, res) => {
+app.post('/team', (req, res) => {
+  const team = req.body.team.toLowerCase();
+  console.log('Processing POST request /team: ', req.body);
+  const url = 'https://nba-players.herokuapp.com/players-stats-teams/' + team;
   axios
-    .get('https://nba-players.herokuapp.com/players-stats-teams/cle')
+    .get(url)
     .then((players) => {
       return players.data.map((player) => {
         return {
@@ -26,7 +26,7 @@ app.get('/team', (req, res) => {
       });
     })
     .then((filtered) => res.send(filtered))
-    .catch((err) => console.error(err));
+    .catch((err) => console.log('express server post /team error: ', err));
 });
 
 let port = process.env.PORT || 3000;

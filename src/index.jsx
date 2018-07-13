@@ -1,20 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
-import axios from 'axios'
+import SearchResults from './components/SearchResults.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    //state here
+    
+    this.state = {
+      stats: []
+    };
 
     this.onSearch = this.onSearch.bind(this);
   }
 
   onSearch(team) {
-    //hit up express for that team
     console.log(team, ' was searched');
-
+    axios.post('/team', { team })
+      .then((response) => {
+        this.setState({
+          stats: response.data
+        });
+        console.log(this.state.stats);
+      })
+      .catch(err => console.log('onSearch FE error: ', err));
   }
 
   render() {
@@ -23,6 +33,7 @@ class App extends React.Component {
         <div className="container">
           <h1 className="title">Query The NBA</h1>
           <Search onSearch={this.onSearch} />
+          <SearchResults team={this.state.team}/>
         </div>
       </section>
     );
