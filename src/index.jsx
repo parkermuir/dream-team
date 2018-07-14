@@ -92,13 +92,12 @@ class App extends React.Component {
             <Search onSearch={this.onSearch} />
             <div className="column is-two-fifths">
               {!this.state.cardHidden && <PlayerCard player={this.state.playerStats} />}
-              <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
+              <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible', margin: '15px', align: 'center' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
             </div>
             <section className="section">
-              <h1 className="title is-3">My Dream Team</h1>
-              <a className="button is-link" onClick={this.handleSaveTeam}>Save Team</a>
-              <Team team={this.state.team} handleDelete={this.handleDelete} />
             </section>
+            <Team team={this.state.team} handleDelete={this.handleDelete} />
+            <a onClick={this.handleSaveTeam} className="button is-link" style={{ visibility: this.state.team.length === 5 ? 'visible' : 'hidden' }}>Save This Team</a>
           </div>
         </section>
       </div>
