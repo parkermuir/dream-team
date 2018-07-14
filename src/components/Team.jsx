@@ -6,8 +6,8 @@ var MyTeam = ({team}) => {
     return (<div></div>);
   }
 
-  const showTeam = team.map((player, i) => {
-    return <div className="column"><PlayerCard player={player} key={i}/></div>;
+  const showTeam = team.map((player, index) => {
+    return <div className="column"><PlayerCard player={player} key={index}/></div>;
   });
 
   return (

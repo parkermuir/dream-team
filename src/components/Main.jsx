@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerCard from './PlayerCard.jsx';
-import MyTeam from './MyTeam.jsx';
+import Team from './Team.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Main extends React.Component {
     this.setState({
       team: temp
     });
-    console.log(this.state.team);
+
   }
 
   render() {
@@ -35,9 +35,9 @@ class Main extends React.Component {
     return (
       <div className="column is-two-fifths">
         <PlayerCard player={this.props.player} handleAdd={this.handleAdd} />
-        <section class="section">
+        <section className="section">
           <h1 className="title is-3">My Team</h1>
-          <MyTeam team={this.state.team.slice(0, 5)} />
+          <Team team={this.state.team} />
         </section>
       </div>
     );

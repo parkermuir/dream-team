@@ -22,7 +22,6 @@ class App extends React.Component {
         this.setState({
           playerStats: response.data
         });
-        console.log(this.state.playerStats);
       })
       .catch(err => console.log('onSearch FE error: ', err));
   }
