@@ -1,11 +1,12 @@
 import React from 'react';
+import Select from 'react-select';
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      team: ''
+      input: ''
     };
     this.search = this.search.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -15,13 +16,12 @@ class Search extends React.Component {
     if (e) {
       e.preventDefault();
     }
-
-    this.props.onSearch(this.state.team);
+    this.props.onSearch(this.state.input);
   }
 
   onChange(e) {
     this.setState({
-      team: e.target.value
+      input: e.target.value
     });
   }
 
@@ -29,11 +29,10 @@ class Search extends React.Component {
     return (
       <div>
         <form onSubmit={this.search}>
-          <input className="input" type="text" placeholder="Enter NBA Team Abbreviation ex: BOS"
-            value={this.state.team.slice(0, 3).toUpperCase()} onChange={this.onChange}>
+          <input className="input" type="text" placeholder="Enter NBA Player"
+            value={this.state.input} onChange={this.onChange}>
           </input>
         </form>
-
       </div>
     );
   }

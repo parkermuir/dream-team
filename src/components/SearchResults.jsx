@@ -1,11 +1,19 @@
 import React from 'react';
+import PlayerCard from './PlayerCard.jsx';
 
 var SearchResults = (props) => {
+  if (!props.player) {
+    return (
+      <div></div>
+    );
+  }
+
+  // const showTeam = props.team.map((player, i) => {
+  //   return <li key={i}>{player.name}</li>;
+  // });
+
   return (
-    <div>
-      <p> test </p>
-      <p>{props.team}</p>
-    </div>
+    <PlayerCard player={props.player}/>
   );
 };
 

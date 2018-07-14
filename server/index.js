@@ -29,5 +29,19 @@ app.post('/team', (req, res) => {
     .catch((err) => console.log('express server post /team error: ', err));
 });
 
+app.post('/player', (req, res) => {
+  const player = req.body.player.toLowerCase();
+  const first = player.split(' ')[0];
+  const last = player.split(' ')[1];
+
+  const url = `https://nba-players.herokuapp.com/players-stats/${last}/${first}`
+
+  axios.get(url)
+    .then((response) => {
+      console.log(response.data);
+      res.send(response.data);
+    });
+});
+
 let port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

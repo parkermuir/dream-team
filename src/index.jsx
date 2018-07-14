@@ -9,20 +9,20 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      stats: []
+      playerStats: null
     };
 
     this.onSearch = this.onSearch.bind(this);
   }
 
-  onSearch(team) {
-    console.log(team, ' was searched');
-    axios.post('/team', { team })
+  onSearch(player) {
+    console.log('Searching for: ', player);
+    axios.post('/player', { player })
       .then((response) => {
         this.setState({
-          stats: response.data
+          playerStats: response.data
         });
-        console.log(this.state.stats);
+        console.log(this.state.playerStats);
       })
       .catch(err => console.log('onSearch FE error: ', err));
   }
@@ -31,9 +31,9 @@ class App extends React.Component {
     return (
       <section className="section">
         <div className="container">
-          <h1 className="title">Query The NBA</h1>
+          <h1 className="title">Dream Team</h1>
           <Search onSearch={this.onSearch} />
-          <SearchResults team={this.state.team}/>
+          <SearchResults player={this.state.playerStats}/>
         </div>
       </section>
     );
