@@ -13,13 +13,18 @@ class App extends React.Component {
       playerStats: null,
       team: [],
       cardHidden: true,
-      tab: 'build'
+      tab: 'build',
+      myTeams: []
     };
 
     this.onSearch = this.onSearch.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleSaveTeam = this.handleSaveTeam.bind(this);
+  }
+
+  componentDidMount() {
+    this.getTeams();
   }
 
   onSearch(player) {
@@ -60,6 +65,16 @@ class App extends React.Component {
     axios.post('/teams', {team: this.state.team})
       .then((response) => console.log('team sent/saved to server'))
       .catch((err) => console.log('error in handleSavePOST', err));
+  }
+
+  getTeams() {
+    axios.get('/teams')
+      .then((response) => {
+        this.setState({
+          myTeams: response.data
+        });
+      })
+      .catch(err => console.error(err));
   }
 
   render() {

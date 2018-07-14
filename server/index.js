@@ -31,5 +31,11 @@ app.post('/teams', (req, res) => {
   res.status(201).send();
 });
 
+app.get('/teams', (req, res) => {
+  dbMethods.loadTeams()
+    .then(teams => res.send(teams))
+    .catch(err => console.error(err));
+});
+
 let port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

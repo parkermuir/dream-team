@@ -20,8 +20,11 @@ let saveTeam = (team) => {
 };
 
 let loadTeams = () => {
-  //return whole db of teams
+  return Team.find()
+    .sort({createdAt: -1})
+    .exec();
 };
 
 
 module.exports.saveTeam = saveTeam;
+module.exports.loadTeams = loadTeams;
