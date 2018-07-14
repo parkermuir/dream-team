@@ -33,7 +33,7 @@ app.post('/player', (req, res) => {
   const first = player.split(' ')[0];
   const last = player.split(' ')[1];
 
-  const url = `https://nba-players.herokuapp.com/players-stats/${last}/${first}`
+  const url = `https://nba-players.herokuapp.com/players-stats/${last}/${first}`;
 
   axios.get(url)
     .then((response) => {

@@ -5,6 +5,8 @@ var PlayerCard = ({player, handleDelete}) => {
     return <div></div>;
   }
 
+  let deleteVis = (player.hasOwnProperty('index')) ? 'visible' : 'hidden';
+
   return (
     <div >
       <div className="card">
@@ -16,7 +18,7 @@ var PlayerCard = ({player, handleDelete}) => {
           <span>Assists: {player.assists_per_game} </span>
         </div>
         <p className="card-footer-item">
-          <a className="delete is-large" onClick={()=> handleDelete(player.index)}></a>
+          <a style={{ visibility: deleteVis }} className="delete is-large" onClick={()=> handleDelete(player.index)}></a>
         </p>
       </div>
     </div>
