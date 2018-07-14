@@ -16,6 +16,9 @@ class Search extends React.Component {
       e.preventDefault();
     }
     this.props.onSearch(this.state.input);
+    this.setState({
+      input: ''
+    });
   }
 
   onChange(e) {

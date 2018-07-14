@@ -1,32 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const dbMethods = require('../database');
 
 let app = express();
 
 app.use(express.static(__dirname + '/../dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.post('/team', (req, res) => {
-  const team = req.body.team.toLowerCase();
-  const url = 'https://nba-players.herokuapp.com/players-stats-teams/' + team;
-  axios
-    .get(url)
-    .then((players) => {
-      return players.data.map((player) => {
-        return {
-          name: player.name,
-          team: player.team_name,
-          ppg: player.points_per_game,
-          rpg: player.rebounds_per_game,
-          apg: player.assists_per_game
-        };
-      });
-    })
-    .then((filtered) => res.send(filtered))
-    .catch((err) => console.log('express server post /team error: ', err));
-});
 
 app.post('/player', (req, res) => {
   const player = req.body.player.toLowerCase();
@@ -41,5 +22,14 @@ app.post('/player', (req, res) => {
     });
 });
 
-let port = process.env.PORT || 3000;
+app.post('/teams', (req, res) => {
+  console.log('received team of length: ', req.body.team.length);
+  dbMethods.saveTeam({
+    team: req.body.team,
+    createdAt: new Date()
+  });
+  res.status(201).send();
+});
+
+let port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

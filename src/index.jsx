@@ -12,12 +12,14 @@ class App extends React.Component {
     this.state = {
       playerStats: null,
       team: [],
-      cardHidden: true
+      cardHidden: true,
+      tab: 'build'
     };
 
     this.onSearch = this.onSearch.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleSaveTeam = this.handleSaveTeam.bind(this);
   }
 
   onSearch(player) {
@@ -54,22 +56,52 @@ class App extends React.Component {
     });
   }
 
+  handleSaveTeam() {
+    axios.post('/teams', {team: this.state.team})
+      .then((response) => console.log('team sent/saved to server'))
+      .catch((err) => console.log('error in handleSavePOST', err));
+  }
+
   render() {
-    return (
-      <section className="section">
-        <div className="container">
-          <h1 className="title">Build Your Dream Team</h1>
-          <Search onSearch={this.onSearch} />
-          <div className="column is-two-fifths">
-            {!this.state.cardHidden && <PlayerCard player={this.state.playerStats} />}
-            <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
+    if (this.state.tab === 'saved') {
+      return (
+        <div>
+          <div className="tabs is-large is-boxed">
+            <ul>
+              <li onClick={() => this.setState({ tab: 'build' })} className={(this.state.tab === 'build') ? 'is-active' : ''}><a>Build Team</a></li>
+              <li onClick={() => this.setState({ tab: 'saved' })} className={(this.state.tab === 'saved') ? 'is-active' : ''}><a>Saved Teams</a></li>
+            </ul>
           </div>
           <section className="section">
-            <h1 className="title is-3">My Dream Team</h1>
-            <Team team={this.state.team} handleDelete={this.handleDelete} />
+            SHOW TEAMS HERE
           </section>
         </div>
-      </section>
+      );
+    }
+
+    return (
+      <div>
+        <div className="tabs is-large is-boxed">
+          <ul>
+            <li onClick={() => this.setState({ tab: 'build' })} className={(this.state.tab === 'build') ? 'is-active' : ''}><a>Build Team</a></li>
+            <li onClick={() => this.setState({ tab: 'saved' })} className={(this.state.tab === 'saved') ? 'is-active' : ''}><a>Saved Teams</a></li>
+          </ul>
+        </div>
+        <section className="section">
+          <div className="container">
+            <Search onSearch={this.onSearch} />
+            <div className="column is-two-fifths">
+              {!this.state.cardHidden && <PlayerCard player={this.state.playerStats} />}
+              <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
+            </div>
+            <section className="section">
+              <h1 className="title is-3">My Dream Team</h1>
+              <a className="button is-link" onClick={this.handleSaveTeam}>Save Team</a>
+              <Team team={this.state.team} handleDelete={this.handleDelete} />
+            </section>
+          </div>
+        </section>
+      </div>
     );
   }
 }
