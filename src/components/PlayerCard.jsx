@@ -1,9 +1,8 @@
 import React from 'react';
 
-
-var PlayerCard = ({player}) => {
+var PlayerCard = ({player, handleAdd}) => {
   return (
-    <div>
+    <div >
       <div className="card">
         <div className="card-content">
           <p className="title">{player.name}</p>
@@ -14,7 +13,7 @@ var PlayerCard = ({player}) => {
         </div>
         <p className="card-footer-item">
           <span>
-            <a className="button is-link">Add To My Dream Team</a>
+            <a className="button is-link" onClick={handleAdd}>Add to Dream Team</a>
           </span>
         </p>
       </div>

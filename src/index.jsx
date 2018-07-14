@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
-import SearchResults from './components/SearchResults.jsx';
+import Main from './components/Main.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -33,7 +33,7 @@ class App extends React.Component {
         <div className="container">
           <h1 className="title">Dream Team</h1>
           <Search onSearch={this.onSearch} />
-          <SearchResults player={this.state.playerStats}/>
+          <Main player={this.state.playerStats}/>
         </div>
       </section>
     );
