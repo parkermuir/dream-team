@@ -1,9 +1,7 @@
 import React from 'react';
 
-var PlayerCard = ({player, handleAdd}) => {
-  console.log(player);
+var PlayerCard = ({player, handleDelete}) => {
   if (!player) {
-    console.log('no player');
     return <div></div>;
   }
 
@@ -18,7 +16,7 @@ var PlayerCard = ({player, handleAdd}) => {
           <span>Assists: {player.assists_per_game} </span>
         </div>
         <p className="card-footer-item">
-          <a class="delete is-large"></a>
+          <a className="delete is-large" onClick={()=> handleDelete(player.index)}></a>
         </p>
       </div>
     </div>

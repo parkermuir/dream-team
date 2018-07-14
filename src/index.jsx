@@ -17,6 +17,7 @@ class App extends React.Component {
 
     this.onSearch = this.onSearch.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   onSearch(player) {
@@ -27,7 +28,6 @@ class App extends React.Component {
           playerStats: response.data,
           cardHidden: false
         });
-        console.log(this.state.playerStats);
       })
       .catch(err => console.log('onSearch FE error: ', err));
   }
@@ -45,19 +45,28 @@ class App extends React.Component {
     console.log(this.state.team);
   }
 
+  handleDelete(i) {
+    console.log(i);
+    let temp = this.state.team;
+    temp.splice(i, 1);
+    this.setState({
+      team: temp
+    });
+  }
+
   render() {
     return (
       <section className="section">
         <div className="container">
-          <h1 className="title">Dream Team</h1>
+          <h1 className="title">Build Your Dream Team</h1>
           <Search onSearch={this.onSearch} />
           <div className="column is-two-fifths">
             {!this.state.cardHidden && <PlayerCard player={this.state.playerStats} />}
             <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
           </div>
           <section className="section">
-            <h1 className="title is-3">My Team</h1>
-            <Team team={this.state.team} />
+            <h1 className="title is-3">My Dream Team</h1>
+            <Team team={this.state.team} handleDelete={this.handleDelete} />
           </section>
         </div>
       </section>
