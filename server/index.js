@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 
 app.post('/team', (req, res) => {
   const team = req.body.team.toLowerCase();
-  console.log('Processing POST request /team: ', req.body);
   const url = 'https://nba-players.herokuapp.com/players-stats-teams/' + team;
   axios
     .get(url)
@@ -38,7 +37,6 @@ app.post('/player', (req, res) => {
 
   axios.get(url)
     .then((response) => {
-      console.log(response.data);
       res.send(response.data);
     });
 });

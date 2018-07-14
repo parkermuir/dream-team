@@ -1,6 +1,12 @@
 import React from 'react';
 
 var PlayerCard = ({player, handleAdd}) => {
+  console.log(player);
+  if (!player) {
+    console.log('no player');
+    return <div></div>;
+  }
+
   return (
     <div >
       <div className="card">
@@ -12,9 +18,7 @@ var PlayerCard = ({player, handleAdd}) => {
           <span>Assists: {player.assists_per_game} </span>
         </div>
         <p className="card-footer-item">
-          <span>
-            <a className="button is-link" onClick={handleAdd}>Add to Dream Team</a>
-          </span>
+          <a class="delete is-large"></a>
         </p>
       </div>
     </div>

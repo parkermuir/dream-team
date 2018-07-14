@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
-import Main from './components/Main.jsx';
 import axios from 'axios';
+import PlayerCard from './components/PlayerCard.jsx';
+import Team from './components/Team.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      playerStats: null
+      playerStats: null,
+      team: [],
+      cardHidden: true
     };
 
     this.onSearch = this.onSearch.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
   }
 
   onSearch(player) {
@@ -20,10 +24,25 @@ class App extends React.Component {
     axios.post('/player', { player })
       .then((response) => {
         this.setState({
-          playerStats: response.data
+          playerStats: response.data,
+          cardHidden: false
         });
+        console.log(this.state.playerStats);
       })
       .catch(err => console.log('onSearch FE error: ', err));
+  }
+
+  handleAdd() {
+    if (this.state.team.length >= 5) {
+      return;
+    }
+    let temp = this.state.team;
+    temp.push(this.state.playerStats);
+    this.setState({
+      team: temp,
+      cardHidden: true
+    });
+    console.log(this.state.team);
   }
 
   render() {
@@ -32,7 +51,14 @@ class App extends React.Component {
         <div className="container">
           <h1 className="title">Dream Team</h1>
           <Search onSearch={this.onSearch} />
-          <Main player={this.state.playerStats}/>
+          <div className="column is-two-fifths">
+            {!this.state.cardHidden && <PlayerCard player={this.state.playerStats} />}
+            <a style={{ visibility: this.state.cardHidden ? 'hidden' : 'visible' }} className="button is-link" onClick={this.handleAdd}>Add to Dream Team</a>
+          </div>
+          <section className="section">
+            <h1 className="title is-3">My Team</h1>
+            <Team team={this.state.team} />
+          </section>
         </div>
       </section>
     );
